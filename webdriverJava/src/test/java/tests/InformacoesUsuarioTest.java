@@ -9,17 +9,20 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.junit.Assert.*;
 
+import java.util.concurrent.TimeUnit;
+
 public class InformacoesUsuarioTest {
 	@Test
 	public void testAdicionarUmaInformacaoAdicionalDoUsuario() {
 		// Open Browser
-		System.setProperty("webdriver.chrome.driver", "/users/mairacelestino/tools/chromedriver");
+		System.setProperty("webdriver.chrome.driver", "C:\\Windows\\chromedriver.exe");
 
 		// Open the X page in browser
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-web-security");// desabilita o CORS Policy do navegador
 		options.addArguments("--start-maximized"); // maximiza o navegador
 		WebDriver browser = new ChromeDriver();
+		browser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		browser.get("http://www.juliodelima.com.br/taskit");
 
 		// Click in the link that have the text "Sign in"
@@ -42,9 +45,12 @@ public class InformacoesUsuarioTest {
 		browser.findElement(By.linkText("SIGN IN")).click();
 
 		// Validate that inside of element with class "me" is the text "Hi, Julio"
+		WebElement me = browser.findElement(By.className("me"));
+		String textoElementoMe = me.getText();
+		assertEquals("Hi, Julio", textoElementoMe);
 
 		// Close browserr
-		// browser.close();
+		browser.quit();
 
 		// Validation
 
