@@ -1,10 +1,14 @@
 package tests;
 
+import org.easetech.easytest.annotation.DataLoader;
+import org.easetech.easytest.annotation.Param;
+import org.easetech.easytest.runner.DataDrivenTestRunner;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,9 +25,11 @@ import static org.junit.Assert.*;
 
 import java.util.concurrent.TimeUnit;
 
+@RunWith(DataDrivenTestRunner.class)
+@DataLoader(filePaths = "informacoesUsuarioTestData.csv")
 public class InformacoesUsuarioTest {
 	private WebDriver browser;
-	
+
 	@Rule
 	public TestName test = new TestName();
 
@@ -72,8 +78,9 @@ public class InformacoesUsuarioTest {
 
 	}
 
-	// @Test
-	public void testAdicionarUmaInformacaoAdicionalDoUsuario() {
+	@Test
+	public void testAdicionarUmaInformacaoAdicionalDoUsuario(@Param(name="tipo") String tipo,
+			@Param(name="contato") String contato, @Param(name="mensagem") String mensagemEsperada) {
 
 		// CLick the button for your XPATH //button[@data-target='addmoredata']
 		browser.findElement(By.xpath("//button[@data-target='addmoredata']")).click();
@@ -83,10 +90,10 @@ public class InformacoesUsuarioTest {
 
 		// In combo of name "Type" choice the option "Phone"
 		WebElement campoType = popupAddMoreData.findElement(By.name("type"));
-		new Select(campoType).selectByVisibleText("Phone");
+		new Select(campoType).selectByVisibleText(tipo);
 
 		// In the Name field "contact" type the number "+351961436981"
-		popupAddMoreData.findElement(By.name("contact")).sendKeys("+351961436981");
+		popupAddMoreData.findElement(By.name("contact")).sendKeys(contato);
 
 		// Click in the link that contains the text "SAVE" that is the popup
 		popupAddMoreData.findElement(By.linkText("SAVE")).click();
@@ -95,19 +102,20 @@ public class InformacoesUsuarioTest {
 		// contact has been added!"
 		WebElement mensagePop = browser.findElement(By.id("toast-container"));
 		String mensage = mensagePop.getText();
-		assertEquals("Your contact has been added!", mensage);
+		assertEquals(mensagemEsperada, mensage);
 
 	}
 
-	@Test
+//	@Test
 	public void removerUmContatoDeUmUsuario() {
 
 		// Login in the Application
 		// Click in the Hi, Julio menu
 		// Go for Ad more data
 		// Click in the element for your XPATH
-		// //span[text()='+351961436981']/following-sibling::a     +5511999999999 +5511999999990
-		browser.findElement(By.xpath("//span[text()='+5511999999990']/following-sibling::a")).click();
+		// //span[text()='+351961436981']/following-sibling::a +5511999999999
+		// +5511999999990
+		browser.findElement(By.xpath("//span[text()='+5511999999999']/following-sibling::a")).click();
 
 		// Confirm the JavaScrip window
 		browser.switchTo().alert().accept();
@@ -116,9 +124,10 @@ public class InformacoesUsuarioTest {
 		WebElement mensagePop = browser.findElement(By.id("toast-container"));
 		String mesage = mensagePop.getText();
 		assertEquals("Rest in peace, dear phone!", mesage);
-		
-		//String screenshotArquivo = "C:/Users/mcelestino/screenshot/" + Generator.dataHoraParaArquivo() + test.getMethodName() + ".png" ;
-		String screenshotArquivo = "C:/Users/mcelestino/screenshot/" + Generator.dataHoraParaArquivo() + "test1.png" ;
+
+		// String screenshotArquivo = "C:/Users/mcelestino/screenshot/" +
+		// Generator.dataHoraParaArquivo() + test.getMethodName() + ".png" ;
+		String screenshotArquivo = "C:/Users/mcelestino/screenshot/" + Generator.dataHoraParaArquivo() + "test1.png";
 		Screenshot.tirar(browser, screenshotArquivo);
 
 		// Wait up to 10 seconds for the window to disappear
