@@ -1,5 +1,7 @@
 package tests;
 
+import static org.junit.Assert.assertEquals;
+
 import org.easetech.easytest.annotation.DataLoader;
 import org.easetech.easytest.annotation.Param;
 import org.easetech.easytest.runner.DataDrivenTestRunner;
@@ -12,18 +14,13 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import suporte.Generator;
 import suporte.Screenshot;
-
-import static org.junit.Assert.*;
-
-import java.util.concurrent.TimeUnit;
+import suporte.Web;
 
 @RunWith(DataDrivenTestRunner.class)
 @DataLoader(filePaths = "informacoesUsuarioTestData.csv")
@@ -35,17 +32,7 @@ public class InformacoesUsuarioTest {
 
 	@Before
 	public void setUp() {
-		// Open Browser
-		System.setProperty("webdriver.chrome.driver", "C:\\Windows\\chromedriver.exe");
-
-		// Open the X page in browser
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--disable-web-security");// desabilita o CORS Policy do navegador
-		options.addArguments("--start-maximized"); // maximiza o navegador
-		browser = new ChromeDriver();
-		browser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		browser.get("http://www.juliodelima.com.br/taskit");
-
+		browser = Web.createChrome();
 		// Click in the link that have the text "Sign in"
 		// WebElement linkSignIn = browser.findElement(By.linkText("Sign in"));
 		// linkSignIn.click();
@@ -75,7 +62,6 @@ public class InformacoesUsuarioTest {
 
 		// Click in the link that contains the text "MORE DATA ABOUT YOU"
 		browser.findElement(By.linkText("MORE DATA ABOUT YOU")).click();
-
 	}
 
 	@Test
@@ -103,19 +89,14 @@ public class InformacoesUsuarioTest {
 		WebElement mensagePop = browser.findElement(By.id("toast-container"));
 		String mensage = mensagePop.getText();
 		assertEquals(mensagemEsperada, mensage);
-
 	}
 
-//	@Test
+	@Test
 	public void removerUmContatoDeUmUsuario() {
-
-		// Login in the Application
-		// Click in the Hi, Julio menu
-		// Go for Ad more data
 		// Click in the element for your XPATH
 		// //span[text()='+351961436981']/following-sibling::a +5511999999999
 		// +5511999999990
-		browser.findElement(By.xpath("//span[text()='+5511999999999']/following-sibling::a")).click();
+		browser.findElement(By.xpath("//span[text()='+5511989891133']/following-sibling::a")).click();
 
 		// Confirm the JavaScrip window
 		browser.switchTo().alert().accept();
@@ -127,7 +108,9 @@ public class InformacoesUsuarioTest {
 
 		// String screenshotArquivo = "C:/Users/mcelestino/screenshot/" +
 		// Generator.dataHoraParaArquivo() + test.getMethodName() + ".png" ;
-		String screenshotArquivo = "C:/Users/mcelestino/screenshot/" + Generator.dataHoraParaArquivo() + "test1.png";
+		// String screenshotArquivo = "C:/Users/mcelestino/screenshot/" +
+		// Generator.dataHoraParaArquivo() + "test1.png";
+		String screenshotArquivo = "/users/mairacelestino/screenshot/" + Generator.dataHoraParaArquivo() + "test1.png";
 		Screenshot.tirar(browser, screenshotArquivo);
 
 		// Wait up to 10 seconds for the window to disappear
@@ -142,6 +125,5 @@ public class InformacoesUsuarioTest {
 	public void tearDown() {
 		// Close browser
 		// browser.quit();
-
 	}
 }
