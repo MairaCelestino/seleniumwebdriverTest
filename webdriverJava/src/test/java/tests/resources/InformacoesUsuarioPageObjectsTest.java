@@ -22,7 +22,10 @@ public class InformacoesUsuarioPageObjectsTest {
 //		 				.typeLogin("julio0001")
 //						.typePassword("123456")
 //						.clickSignIn();
-				.fazerLogin("julio0001", "123456");
+				.fazerLogin("julio0001", "123456")
+				.clickMe()
+				.clickTabMoreDataAboutYou()
+				.clickButtonAddMoreDataAboutYou();
 	}
 
 	@After
