@@ -3,11 +3,10 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class LoginFormPage {
-	private WebDriver browser;
+public class LoginFormPage extends BasePage {
 
 	public LoginFormPage(WebDriver browser) {
-		this.browser = browser;
+		super(browser);
 	}
 
 	public LoginFormPage typeLogin(String login) {
@@ -24,10 +23,10 @@ public class LoginFormPage {
 
 	public SecretPage clickSignIn() {
 		browser.findElement(By.linkText("SIGN IN")).click();
-		
+
 		return new SecretPage(browser);
 	}
-	
+
 	public SecretPage fazerLogin(String login, String password) {
 		typeLogin(login);
 		typePassword(password);
@@ -35,8 +34,8 @@ public class LoginFormPage {
 //		browser.findElement(By.id("signinbox")).findElement(By.name("Login")).sendKeys(login);
 //		browser.findElement(By.id("signinbox")).findElement(By.name("password")).sendKeys(password);
 //		browser.findElement(By.linkText("SIGN IN")).click();
-		
+
 		return new SecretPage(browser);
-		
+
 	}
 }

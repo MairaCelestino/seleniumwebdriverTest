@@ -1,4 +1,4 @@
-package tests;
+package tests.resources;
 
 import static org.junit.Assert.assertEquals;
 
@@ -96,7 +96,7 @@ public class InformacoesUsuarioTest {
 		// Click in the element for your XPATH
 		// //span[text()='+351961436981']/following-sibling::a +5511999999999
 		// +5511999999990
-		browser.findElement(By.xpath("//span[text()='+5511989891133']/following-sibling::a")).click();
+		browser.findElement(By.xpath("//span[text()='+351111111111']/following-sibling::a")).click();
 
 		// Confirm the JavaScrip window
 		browser.switchTo().alert().accept();
@@ -108,9 +108,9 @@ public class InformacoesUsuarioTest {
 
 		// String screenshotArquivo = "C:/Users/mcelestino/screenshot/" +
 		// Generator.dataHoraParaArquivo() + test.getMethodName() + ".png" ;
-		// String screenshotArquivo = "C:/Users/mcelestino/screenshot/" +
-		// Generator.dataHoraParaArquivo() + "test1.png";
-		String screenshotArquivo = "/users/mairacelestino/screenshot/" + Generator.dataHoraParaArquivo() + "test1.png";
+		 String screenshotArquivo = "C:/Users/mcelestino/screenshot/" +
+		Generator.dataHoraParaArquivo() + "test1.png";
+		//String screenshotArquivo = "/users/mairacelestino/screenshot/" + Generator.dataHoraParaArquivo() + "test1.png";
 		Screenshot.tirar(browser, screenshotArquivo);
 
 		// Wait up to 10 seconds for the window to disappear
@@ -124,6 +124,6 @@ public class InformacoesUsuarioTest {
 	@After
 	public void tearDown() {
 		// Close browser
-		// browser.quit();
+		browser.quit();
 	}
 }
