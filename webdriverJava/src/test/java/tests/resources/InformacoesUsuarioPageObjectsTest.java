@@ -21,7 +21,8 @@ public class InformacoesUsuarioPageObjectsTest {
 
 	@Before
 	public void setUp() {
-		browser = Web.createChrome();
+		//browser = Web.createChrome();
+		browser = Web.createBrowserStack(); //executando na nuvem
 	}
 
 	@Test
@@ -48,6 +49,6 @@ public class InformacoesUsuarioPageObjectsTest {
 
 	@After
 	public void testDown() {
-		//browser.quit();
+		browser.quit();
 	}
 }
